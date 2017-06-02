@@ -1,0 +1,37 @@
+.add-color-form {
+    margin: 20px 0;
+}
+
+.add-color-form input[type=text] {
+    padding: 6px 12px;
+}
+
+.add-color-form input[type=color] {
+    margin-right: 10px;
+}
+
+.add-color-form button {
+    padding: 6px 12px;
+}
+
+.color {
+    float: left;
+    background: #fff;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    position: relative;
+    min-width: 300px;
+}
+
+.color .remove {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+.color .color-preview {
+    width: 100%;
+    height: 50px;
+}
