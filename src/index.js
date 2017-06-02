@@ -3,53 +3,43 @@ import { render } from 'react-dom';
 import './css/styles.css';
 
 window.React = React;
-
 const target = document.getElementById('react-container');
-
-// import { Menu } from './components';
-// import { recipes } from './data';
-
-// render(
-//     <Menu recipes={recipes} />,
-//     target
-// );
 
 /*
     Color Organizer
 */
-// import App from './App';
-// import { colors } from './data';
+import App from './App';
+import { colors as initialState } from './data';
+import { createStore, combineReducers, compose } from 'redux';
+import { colors, sort, addColor, removeColor, rateColor, sortColors } from './components/color';
 
-// render(
-//     <App colors={colors} />,
-//     target
-// );
+const store = createStore(
+    combineReducers({ colors, sort }),
+    initialState
+);
 
-// import { MemberList } from './components';
-
-// render(
-//     <MemberList count={5} />,
-//     target
-// );
-
-// import { CountryDropdown } from './components';
-
-// render(
-//     <CountryDropdown selected="Philippines" />,
-//     target
-// );
-
-import { countdownActions, CountDown, CountdownDispatcher, CountdownStore } from './components/countdown';
-
-const appDispatcher = new CountdownDispatcher();
-const actions = countdownActions(appDispatcher);
-const store = new CountdownStore(10, appDispatcher);
-
-const renderr = count => render(
-    <CountDown count={count} {...actions} />,
+render(
+    <App {...store.getState()} />,
     target
 );
 
-store.on('TICK', () => renderr(store.count));
-store.on('RESET', () => renderr(store.count));
-renderr(store.count);
+console.log(store.getState());
+
+store.subscribe(() =>
+    console.log(store.getState())
+);
+
+store.dispatch( removeColor('83c7ba2f-7392-4d7d-9e23-35adbe186046') );
+store.dispatch( rateColor('a5685c39-6bdc-4727-9188-6c9a00bf7f95', 5) );
+store.dispatch( sortColors('title') );
+store.dispatch( addColor('Black', '#000') );
+
+const print = compose(
+    list => console.log(list),
+    titles => titles.join(', '),
+    map => map(c => c.title),
+    colors => colors.map.bind(colors),
+    state => state.colors
+);
+
+print(store.getState());
