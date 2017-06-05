@@ -9,24 +9,15 @@ const target = document.getElementById('react-container');
     Color Organizer
 */
 import App from './App';
-import { colors as initialState } from './data';
 import { createStore, combineReducers, compose } from 'redux';
-import { colors, sort, addColor, removeColor, rateColor, sortColors } from './components/color';
+import { addColor, removeColor, rateColor, sortColors } from './components/color';
+import storeFactory from './store';
 
-const store = createStore(
-    combineReducers({ colors, sort }),
-    initialState
-);
+const store = storeFactory(true);
 
 render(
     <App {...store.getState()} />,
     target
-);
-
-console.log(store.getState());
-
-store.subscribe(() =>
-    console.log(store.getState())
 );
 
 store.dispatch( removeColor('83c7ba2f-7392-4d7d-9e23-35adbe186046') );
@@ -43,3 +34,5 @@ const print = compose(
 );
 
 print(store.getState());
+
+localStorage.clear();
